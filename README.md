@@ -105,3 +105,116 @@ From here, I will navigate to the "Member of" tab, click "Add", enter "Domain Ad
 <img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-27.png" width=60% height=60%>
 <img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-28.png" width=60% height=60%>
 <img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-29.png" width=60% height=60%>
+
+<h2> Phase 3: Installing RAS / NAT (Remote Access Server / Network Address Translation) </h2>
+Now that I have set up Active Directory Domain Services and created an Administrator account, I will be installing RAS/NAT on the Domain Controller. What this is will do is enable all the local Windows 10 clients to both connect to the local private network, as well as to the internet via the 2 NICs on the Domain Controller which I configured earlier.
+
+To begin, I will log into the Domain Controller on the new Administrator Account (a-dgouws) which I just created:
+
+IMG-30
+
+From the Server Manager, I will click on "Add roles and features" again, "Next", then I will confirm that "Role-based or feature-based installation" has been checked and click "Next":
+
+IMG-31
+IMG-32
+
+Now I will make sure that the correct server is selected and click "Next" again:
+
+IMG-33
+
+Now, under Roles I will check "Remote Access" and click "Next":
+
+IMG-34
+
+Then, in Role Services I will check the "Routing" option, which will automatically also select "DirectAcces and VPN (RAS), and click "Next" until I get to the Role Services window:
+
+IMG-35
+
+Now I will click "Install" and after the installation has been completed, I will click on "Close"
+
+IMG-36
+
+From the Server Manager, I will now click on the Tools menu at the top right and navigate to "Routing and Remote Access":
+
+IMG-37
+
+From here I will right-click on the Domain Controller (starting with "WIN") and click on "Configure and Enable Routing and Remote Access":
+
+IMG-38
+
+Then I will click "Next" and select the "Network Address Translation (NAT)" option and click "Next":
+
+IMG-39
+IMG-40
+
+From here I will select the "Use this public interface to connect to the internet" option, and select the "INTERNET" NIC and click "Next" and "Finish":
+
+IMG-41
+
+Now I will close the window and go back to the Server Manager.
+
+I will now set up a DHCP server on the Domain Controller to allow the Windows 10 Clients to obtain an IP address to access the internet. From the Server Manager, I will again click on "Add roles and features", followed by "Next", followed by "Next" assuming the "Role-based or feature-based installation" option has been selected:
+
+IMG-42
+
+From Server Selection, ensure that the correct (and only) Server is selected (starting with "WIN") and click "next":
+
+IMG-43
+
+From the Server Roles window I will now check DHCP and click "Add Features":
+
+IMG-44
+IMG-45
+
+Now I will click "Next" until I get to Confirmation, at which point I will click "Install", and after the installation has completed I will close the window:
+
+IMG-46
+
+I will now configure the DHCP's scope of available IP addresses to assign to the clients. Firstly, I will click on the Tools menu at the top right of the Server Manager and click on DHCP:
+
+IMG-47
+
+From here I will click on the DHCP server, right-click on IPv4, and click on "New Scope":
+
+IMG-48
+
+Then I will click "Next" and name the scope "172.16.1.100-200" (it was supposed to be "172.16.0.100-200" but the name is arbitrary), and click on "Next" again:
+
+IMG-49
+IMG-50
+
+Now I will set the Range: Start IP Address will be set to "172.16.0.100", End IP Address will be set to "172.16.0.200", the length will be set to "24", which will yield the Subnet Mask of "255.255.255.0":
+
+IMG-51
+
+I do not need any exclusive IP addresses for this use case, so I will not assign any exclusions:
+
+IMG-52
+
+I also do not have a need for lease periods longer or shorter than 8 days, so I will leave them as is:
+
+IMG-53
+
+From the "Configure DHCP options" window, will will check "Yes, I want to configure these options now" and click "Next":
+
+IMG-54
+
+From here we will add an IP address for a router which the clients will use to access the internet. We will use the IP address for the internal NIC (172.16.0.1) for the router IP and click "Add" and then "Next":
+
+IMG-55
+
+Now I have to enter an IP address for a DNS server. When Active Directory Domain Services is installed, DNS is automatically added as well. Thus I will use the Domain Controller as the DNS server. I will enter the Domain Controller's IP address, click "Add", and then "next":
+
+IMG-56
+
+Now I will click "Next", check "Yes, I want to activate this scope now", click "Next" again, and finally "Finish":
+
+IMG-57
+IMG-58
+IMG-59
+
+Now to verify that everything is working, I will right-click on the DHCP server, click on "Autherize" and then again on "Refresh":
+
+IMG-60
+IMG-61
+IMG-62
