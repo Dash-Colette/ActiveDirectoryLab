@@ -46,63 +46,63 @@ Lastly I will click OK, then OK again, and finally close the Properties window.
 <h2> Phase 2: Setting up Active Directory </h2>
 Now that the NICs have both been configured, I can move on to installing Active Directory Domain Services and create a Domain. To do this, I will first navigate to the Server Manager and click on "Add Roles and Features" followed by "Next":
 
-IMG-10
+![IMG-10](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-10.png)
 
 From here, I made sure that the "Role-based or Feature-based installation" option was checked and clicked "Next":
 
-IMG-11
+![IMG-11](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-11.png)
 
 From the next screen, there should only be one server on the list of available servers. I will ensure that it was selected and click "Next":
 
-IMG-12
+![IMG-12](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-12.png)
 
 From the Server Roles window, there will be a list of many available roles. I will be selecting Active Directory Domain Services, click on "Add Features" and finally click on "Next":
 
-IMG-13
+![IMG-13](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-13.png)
 
 Afterwards I will continue to click "Next" until I get to the Confirmation window, at which point I will click on "Install" and wait for the installation to complete and close the window:
 
-IMG-14
-IMG-15
+![IMG-14](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-14.png)
+![IMG-15](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-15.png)
 
 Now, Active Directory Domain Services has been installed, however the domain itself has not yet been created. So, a Post-deployment Configuration has to be done to create a domain. To do this, I will click on the Notifications icon on the top right of the Server Manager window and click on the "Promote this server to a domain controller" option:
 
-IMG-16
-IMG-17
+![IMG-16](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-16.png)
+![IMG-17](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-17.png)
 
 This will open the Deployment Configuration window. From here I will click on the "Add a new forest" option and name it "mydomain.com" (the name is arbitrary), and click "Next":
 
-IMG-18
+![IMG-18](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-18.png)
 
 The next window will be the Domain Controller Options window. I will not be using the DRSM feature, but I have to configure it with a password regardless because it is mandatory. I will simply use "Password1". Afterwards I will continue to click on "Next" until I get to the Prerequisites Check window and click on "Install". After the installation has been completed, the VM will automatically be restarted:
 
-IMG-19
+![IMG-19](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-19.png)
 
 Now for the next part I will be creating my own dedicated Domain Admin Account, which I will be using instead of the native administrator account. First I will log in to the Domain Controller, then I will open "Active Directory Users and Computers", which can be found under Start > Windows Administrative Tools:
 
-IMG-20
+![IMG-20](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-20.png)
 
 From here, I will right-click on "mydomain.com", navigate to "New" and then "Organizational Unit":
 
-IMG-21
+![IMG-21](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-21.png)
 
 I will name this OU "ADMINISTRATORS" and click "OK":
 
-IMG-22
+![IMG-22](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-22.png)
 
 Next, inside of the newly-created ADMINISTRATORS OU, I will create a new user account. I will right-click on the ADMINISTRATORS OU and navigate to "New" and then "User". Then I will input my personal details: my name, surname, and a User logon name of "a-dgouws". Afterwards I will set the password as "Password1", uncheck the "User must change password at next logon" option, and check the "Password never expires" option. Finally, from the next window, I will confirm all of the details and click "Finish":
 
-IMG-23
-IMG-24
-IMG-25
+![IMG-23](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-23.png)
+![IMG-24](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-24.png)
+![IMG-25](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-25.png)
 
 Now I will promote the newly-created account to a Domain Admin. I will right-click on the account and click on "Properties":
 
-IMG-26
+![IMG-26](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-26.png)
 
 From here, I will navigate to the "Member of" tab, click "Add", enter "Domain Admins" in the text field and click "Check Names" (this will resolve the text field into the actual Domain Admins), and finally click "OK" "Apply" and "OK":
 
-IMG-27
-IMG-28
-IMG-29
+![IMG-27](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-27.png)
+![IMG-28](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-28.png)
+![IMG-29](https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-29.png)
 
