@@ -220,3 +220,20 @@ Now to verify that everything is working, I will right-click on the DHCP server,
 <img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-60.png" width=60% height=60%>
 <img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-61.png" width=60% height=60%>
 <img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-62.png" width=60% height=60%>
+
+<h2> Phase 5: Populating Active Directory with Users using a PowerShell Script </h2>
+Now it is finally time to create some users with a PowerShell script. To do this, I will click on Start, then Windows PowerShell, followed right-clicking Windows PowerShell ISE, selecting "More" and then "Run as Administrator":
+
+IMG-63
+
+This is where I will write and execute the script. But before I do that, I will generate a list of over 1000 randomized names and surnames to a txt file and save it to the desktop. At the top of this list I will also make a name entry for myself, named David Gouws, and put it at the very top of the list before saving and closing:
+
+IMG-
+
+Now for the script:
+
+IMG-
+
+First, I created 2 variables: On line 1, I created a variable named "$PASSWORD_FOR_USERS" and set it equal to "Password1". This created the password which all the users will use.
+Then on Line 2, I created a variable named "$USER_NAMES_LIST" and set it equal to "Get-Content .\names.txt". What this does is creating an array and populating it with the content of the names list that we created earlier. The script should be saved in the same directory as names list for this script to work. I will save both on the desktop for this case.
+
