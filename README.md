@@ -153,6 +153,8 @@ From here I will select the "Use this public interface to connect to the interne
 
 Now I will close the window and go back to the Server Manager.
 
+<h2> Phase 4: DHCP Setup </h2>
+
 I will now set up a DHCP server on the Domain Controller to allow the Windows 10 Clients to obtain an IP address to access the internet. From the Server Manager, I will again click on "Add roles and features", followed by "Next", followed by "Next" assuming the "Role-based or feature-based installation" option has been selected:
 
 <img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-42.png" width=60% height=60%>
