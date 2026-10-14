@@ -222,20 +222,21 @@ Now to verify that everything is working, I will right-click on the DHCP server,
 <img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-62.png" width=60% height=60%>
 
 <h2> Phase 5: Populating Active Directory with Users using a PowerShell Script </h2>
-Now it is finally time to create some users with a PowerShell script. To do this, I will click on Start, then Windows PowerShell, followed right-clicking Windows PowerShell ISE, selecting "More" and then "Run as Administrator":
+Now it is finally time to create some users with a PowerShell script. To do this, I will click on Start, then Windows PowerShell, followed by right-clicking Windows PowerShell ISE, selecting "More" and then "Run as Administrator":
 
 IMG-63
+IMG-64
 
-This is where I will write and execute the script. But before I do that, I will generate a list of over 1000 randomized names and surnames to a txt file and save it to the desktop. At the top of this list I will also make a name entry for myself, named David Gouws, and put it at the very top of the list before saving and closing:
+This is where I will write and execute the script. But before I do that, I will download a .txt list of over 1000 randomized names and surnames (courtesy of Josh Madakor) and save it to the desktop. At the top of this list I will also make a name entry for myself, named David Gouws, and put it at the very top of the list before saving and closing:
 
-IMG-
+IMG-65
 
 Now for the script:
 
-IMG-
+IMG-66
 
 First, I created 2 variables: On line 1, I created a variable named "$PASSWORD_FOR_USERS" and set it equal to "Password1". This created the password which all the users will use.
-Then on Line 2, I created a variable named "$USER_NAMES_LIST" and set it equal to "Get-Content C:\Users\a-dgouws\Desktop\names.txt". What this does is creating an array and populating it with the content of the names list that we created earlier.
+Then on Line 2, I created a variable named "$USER_NAMES_LIST" and set it equal to "Get-Content C:\Users\a-dgouws\Desktop\names.txt". What this does is it creates an array and populates it with the content of the names list that we downloaded earlier.
 
 In Line 4, I created an object named "$password". I set it equal to "ConvertTo-SecureString $PASSWORD_FOR_USERS -AsPlainText -Force", which took the variable "$PASSWORD_FOR_USERS" which I created earlier, and turns it into an object that PowerShell can use as a secure password. I will use this object later in a loop.
 
@@ -246,7 +247,7 @@ On line 6, I created the loop with "foreach", followed by the parameters "($n in
 On line 7-9, I specify new variables, namely "$first", "$surname" and "$username":
 "$first" will be the first name, and on line 7 I set it equal to "$n.Split(" ")[0].ToLower()" - the $n specifies the whole name (name and surname). The ".Split(" ")" that follows, specifies where the string will be split (namely the space between the name and surname), the "[0]" specifies which element (0 is the first element) will be selected to be the variable "$first", and ".ToLower()" states that the entire element will be converted to lowercase.
 "$surname" will be the surname, and it is almost identical to the code of "$first", with the exception of "[0]" being changed to "[1]", because we are using the second element in the string as the surname.
-"$username" will be a concatenation of the 2 variables that I defined in the 2 lines of code above it, namely "$first" and "$surname". However I will only be using the first initial of the first name, so I will have to define a substring for that. I will do this by setting "$username" equal to ""$($first.Substring(0,1))$($last)"" - this states that a substring from the first to second position (i.e the first character) of the variable "$first" will be taken, and concatenated to the entire "$surname" variable. Lastly the ".ToLower()" part states that the entire element will be converted to lowercase.
+"$username" will be a concatenation of the 2 variables that I defined in the 2 lines of code above it, namely "$first" and "$surname". However I will only be using the first initial of the first name, so I will have to define a substring for that. I will do this by setting "$username" equal to ""$($first.Substring(0,1))$($surname)"" - this states that a substring from the first to second position (i.e the first character) of the variable "$first" will be taken, and concatenated to the entire "$surname" variable. Lastly the ".ToLower()" part states that the entire element will be converted to lowercase.
 
 Line 10 is merely informational output - it is only there to let me know that a new user is being created. The "Write-Host" specifies that something is going to be outputted in text to the console, and the ""Creating user: $($username)"" part specifies what that something is. The "-BackgroundColor Black" and "-ForegroundColor Cyan" are aesthetic choices and self-explanatory.
 
@@ -254,11 +255,18 @@ Now that all of the variables have been defined, for the next part of the loop, 
 On line 12 I start the user creation process with "New-AdUser", followed by definitions for all the required fields.
 Finally I conclude the loop with "}" to mark the end of the user creation process for that user.
 
-One final step to take is to set the Execution Policy to Unrestricted, otherwise the script will not run. To do this, I will run the command "Set-ExecutionPolicy Unrestricted" and click "Yes to all" when prompted.
+One final step to take is to set the Execution Policy to Unrestricted, otherwise the script will not run. To do this, I will run the command "Set-ExecutionPolicy Unrestricted" and click "Yes to all" when prompted:
+
+IMG-67
 
 Finally, I will run the script and create all of the users. After the script has finished, I will return to Active Directory Users and Computers, right-click the Domain and click "Refresh". Then I will right-click on the domain again and click "Find":
 
-IMG-
+IMG-68
+IMG-69
+IMG-70
 
 From here I will click on "Find Now" while having the field blank. This should yield all of the created users which should total over 1000:
 
+IMG-71
+
+<h1> Phase 6: Connecting the Wondows 10 Client to the Domain </h1>
