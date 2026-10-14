@@ -224,16 +224,16 @@ Now to verify that everything is working, I will right-click on the DHCP server,
 <h2> Phase 5: Populating Active Directory with Users using a PowerShell Script </h2>
 Now it is finally time to create some users with a PowerShell script. To do this, I will click on Start, then Windows PowerShell, followed by right-clicking Windows PowerShell ISE, selecting "More" and then "Run as Administrator":
 
-IMG-63
-IMG-64
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-63.png" width=60% height=60%>
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-64.png" width=60% height=60%>
 
 This is where I will write and execute the script. But before I do that, I will download a .txt list of over 1000 randomized names and surnames (courtesy of Josh Madakor) and save it to the desktop. At the top of this list I will also make a name entry for myself, named David Gouws, and put it at the very top of the list before saving and closing:
 
-IMG-65
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-65.png" width=60% height=60%>
 
 Now for the script:
 
-IMG-66
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-66.png" width=60% height=60%>
 
 First, I created 2 variables: On line 1, I created a variable named "$PASSWORD_FOR_USERS" and set it equal to "Password1". This created the password which all the users will use.
 Then on Line 2, I created a variable named "$USER_NAMES_LIST" and set it equal to "Get-Content C:\Users\a-dgouws\Desktop\names.txt". What this does is it creates an array and populates it with the content of the names list that we downloaded earlier.
@@ -257,16 +257,16 @@ Finally I conclude the loop with "}" to mark the end of the user creation proces
 
 One final step to take is to set the Execution Policy to Unrestricted, otherwise the script will not run. To do this, I will run the command "Set-ExecutionPolicy Unrestricted" and click "Yes to all" when prompted:
 
-IMG-67
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-67.png" width=60% height=60%>
 
 Finally, I will run the script and create all of the users. After the script has finished, I will return to Active Directory Users and Computers, right-click the Domain and click "Refresh". Then I will right-click on the domain again and click "Find":
 
-IMG-68
-IMG-69
-IMG-70
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-68.png" width=60% height=60%>
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-69.png" width=60% height=60%>
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-70.png" width=60% height=60%>
 
 From here I will click on "Find Now" while having the field blank. This should yield all of the created users which should total over 1000:
 
-IMG-71
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-71.png" width=60% height=60%>
 
 <h1> Phase 6: Connecting the Wondows 10 Client to the Domain </h1>
