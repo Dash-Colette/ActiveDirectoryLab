@@ -235,5 +235,30 @@ Now for the script:
 IMG-
 
 First, I created 2 variables: On line 1, I created a variable named "$PASSWORD_FOR_USERS" and set it equal to "Password1". This created the password which all the users will use.
-Then on Line 2, I created a variable named "$USER_NAMES_LIST" and set it equal to "Get-Content .\names.txt". What this does is creating an array and populating it with the content of the names list that we created earlier. The script should be saved in the same directory as names list for this script to work. I will save both on the desktop for this case.
+Then on Line 2, I created a variable named "$USER_NAMES_LIST" and set it equal to "Get-Content C:\Users\a-dgouws\Desktop\names.txt". What this does is creating an array and populating it with the content of the names list that we created earlier.
+
+In Line 4, I created an object named "$password". I set it equal to "ConvertTo-SecureString $PASSWORD_FOR_USERS -AsPlainText -Force", which took the variable "$PASSWORD_FOR_USERS" which I created earlier, and turns it into an object that PowerShell can use as a secure password. I will use this object later in a loop.
+
+In line 5, I used the code "New-ADOrganitionalUnit -Name _USERS" to create a new Organizational Unit in Active Directory (similar to the _ADMINISTRATORS OU I created earlier in the project), and name it "_USERS".
+
+Now I will break down the loop which spans lines 6 through 21:
+On line 6, I created the loop with "foreach", followed by the parameters "($n in $USER_NAMES_LIST)" - This essentially specifies what the loop will be applied to, namely each name ($n) in the variable "$USER_NAMES_LIST" that we created earlier. I then type a "{" to mark the start of the loop specifications (that will be applied to each name).
+On line 7-9, I specify new variables, namely "$first", "$surname" and "$username":
+"$first" will be the first name, and on line 7 I set it equal to "$n.Split(" ")[0].ToLower()" - the $n specifies the whole name (name and surname). The ".Split(" ")" that follows, specifies where the string will be split (namely the space between the name and surname), the "[0]" specifies which element (0 is the first element) will be selected to be the variable "$first", and ".ToLower()" states that the entire element will be converted to lowercase.
+"$surname" will be the surname, and it is almost identical to the code of "$first", with the exception of "[0]" being changed to "[1]", because we are using the second element in the string as the surname.
+"$username" will be a concatenation of the 2 variables that I defined in the 2 lines of code above it, namely "$first" and "$surname". However I will only be using the first initial of the first name, so I will have to define a substring for that. I will do this by setting "$username" equal to ""$($first.Substring(0,1))$($last)"" - this states that a substring from the first to second position (i.e the first character) of the variable "$first" will be taken, and concatenated to the entire "$surname" variable. Lastly the ".ToLower()" part states that the entire element will be converted to lowercase.
+
+Line 10 is merely informational output - it is only there to let me know that a new user is being created. The "Write-Host" specifies that something is going to be outputted in text to the console, and the ""Creating user: $($username)"" part specifies what that something is. The "-BackgroundColor Black" and "-ForegroundColor Cyan" are aesthetic choices and self-explanatory.
+
+Now that all of the variables have been defined, for the next part of the loop, I will populate the user information which will be used when the user will be created in Active Directory. I will define what will be used for the Account Password, the Given Name, the Surname, the Username/Display Name, the Employee ID, the path of the directory in which the user will be created, and also whether the password never expires and if the account should be enabled.
+On line 12 I start the user creation process with "New-AdUser", followed by definitions for all the required fields.
+Finally I conclude the loop with "}" to mark the end of the user creation process for that user.
+
+One final step to take is to set the Execution Policy to Unrestricted, otherwise the script will not run. To do this, I will run the command "Set-ExecutionPolicy Unrestricted" and click "Yes to all" when prompted.
+
+Finally, I will run the script and create all of the users. After the script has finished, I will return to Active Directory Users and Computers, right-click the Domain and click "Refresh". Then I will right-click on the domain again and click "Find":
+
+IMG-
+
+From here I will click on "Find Now" while having the field blank. This should yield all of the created users which should total over 1000:
 
