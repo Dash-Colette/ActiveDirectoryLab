@@ -11,7 +11,7 @@ Finally, I will be creating a Client VM with Windows 10 installed, which will th
 
 Credit to Josh Madakor for his tutorial on the subject!
 
-<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-00.png" width=60% height=60%>
+<img src="https://github.com/Dash-Colette/ActiveDirectoryLab/blob/main/IMG-00.png" width=80% height=80%>
 
 <h2> Phase 0: Setting Up Virtual Box and Installing Windows Server 2019 </h2>
 
